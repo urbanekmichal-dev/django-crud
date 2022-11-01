@@ -59,3 +59,9 @@ def get(request, id):
     news = get_object_or_404(News, id=id)
     context = {'news': news}
     return render(request, 'news/view.html', context)
+
+def edit(request,id):
+    news_object = get_object_or_404(News, id=id)
+    news=NewsForm(instance=news_object)
+    context = {'form': news}
+    return render(request, 'news/edit.html', context)

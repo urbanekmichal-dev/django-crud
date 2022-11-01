@@ -1,7 +1,7 @@
 {% if news %}
     <ul>
     {% for n in news %}
-        <li><a href="/news/{{n.id}}/">{{n.topic}}</a></li>
+        <li><a href="/news/{{n.id}}/">{{n.topic}}</a> <a href="/news/edit/{{n.id}}/">Edit</a></li>
     {% endfor %}
     </ul>
 {% else %}
