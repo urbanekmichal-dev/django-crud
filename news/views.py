@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from .models import News
@@ -16,7 +17,7 @@ def index(request):
     # elementy ze słownika context wykorzytywane są w pliku news/index.html
     return render(request, 'news/index.html', context)
 
-
+@login_required(login_url='/login/')
 def add(request):
     # Sprawdzenie metody jaką przyszło zapytanie HTTP
     # Jeżeli POST - szukamy danych w ciele zapytania
