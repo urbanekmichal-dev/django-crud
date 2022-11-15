@@ -1,0 +1,26 @@
+
+{% if reservations %}
+<table>
+    <tr>
+       <th>Name</th>
+        <th>Surname</th>
+        <th>Room</th>
+        <th>Check-in date</th>
+        <th>Check-out date</th>
+    </tr>
+        {% for n in reservations %}
+    <tr>
+        <td><a href=/reservations/edit/{{n.id}}/>{{n.name}}</a></td>
+        <td>{{n.surname}}</td>
+        <td>{{n.room}}</td>
+        <td>{{n.check_in}}</td>
+        <td>{{n.check_out}}</td>
+        <td><a href=/reservations/delete/{{n.id}}/>Delete</a></td>
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+    <p>No reservations are available.</p>
+{% endif %}
+
+<a href="/reservations/add/">Add new reservation</a>
