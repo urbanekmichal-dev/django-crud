@@ -45,3 +45,8 @@ def log_in(request):
     else:
         context = {'form': LoginForm()}
         return render(request, 'authentication/login.html', context)
+def log_out(request):
+    if request.user.is_authenticated:
+        logout(request)
+    return redirect('view_news')
+

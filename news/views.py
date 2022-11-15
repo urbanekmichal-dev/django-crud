@@ -1,9 +1,9 @@
-from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from .models import News
 from .forms import NewsForm
 from django.utils import timezone
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
@@ -16,6 +16,7 @@ def index(request):
     # Przesłanie wyrenderowanej strony wraz z dodanymi elementami z bazy danych
     # elementy ze słownika context wykorzytywane są w pliku news/index.html
     return render(request, 'news/index.html', context)
+
 
 @login_required(login_url='/login/')
 def add(request):
@@ -52,10 +53,31 @@ def add(request):
         context = {'form': news}
         return render(request, 'news/add.html', context)
 
+
 def get(request, id):
     # funkcja get_object_or_404 zwraca element z bazy
-    # danych o danej warto±ci argumentu
-    # lub przesªyªa do kilenta bª¡d
+    # danych o danej wartości argumentu
+    # lub przesłyła do kilenta błąd
     news = get_object_or_404(News, id=id)
     context = {'news': news}
     return render(request, 'news/view.html', context)
+
+
+def edit(request, id):
+    news_object = get_object_or_404(News, id=id)
+    news = NewsForm(instance=news_object)
+    context = {'form': news, 'id': id}
+    return render(request, 'news/edit.html', context)
+
+def update(request, id):
+    news = NewsForm(request.POST)
+    if news.is_valid():
+        news = news.save(commit=False)
+        news.create_time = timezone.now()
+        news.last_edit_time = timezone.now()
+        news.save()
+        news_object = get_object_or_404(News, id=id)
+        news_object.delete()
+        return redirect('view_news')
+    else:
+        return edit(request, id)
