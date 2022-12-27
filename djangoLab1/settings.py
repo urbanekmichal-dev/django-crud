@@ -34,12 +34,14 @@ INSTALLED_APPS = [
     'news.apps.NewsConfig',
     'reservations.apps.ReservationsConfig',
     'authentication.apps.AuthenticationConfig',
+    'user.apps.UserConfig'
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'bootstrap5',
 ]
 
 MIDDLEWARE = [

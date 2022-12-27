@@ -21,6 +21,7 @@ urlpatterns = [
     path('', include('home.urls')),
     path('news/', include('news.urls')),
     path('', include('authentication.urls')),
-    path('reservations/', include('reservations.urls'))
+    path('reservations/', include('reservations.urls')),
+    path('users/', include('user.urls'))
 
 ]

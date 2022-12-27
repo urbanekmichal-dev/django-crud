@@ -3,7 +3,7 @@ from datetime import timezone
 from django.shortcuts import render, get_object_or_404, redirect
 
 from reservations.forms import ReservationForms
-from reservations.models import Reservations
+from reservations.models import Reservations, Room
 
 
 # Create your views here.
@@ -51,3 +51,9 @@ def update(request, id):
         return redirect('view_reservations')
     else:
         return edit(request, id)
+
+def roomDetails(request,id):
+    rooms = get_object_or_404(Room, id=id)
+    context = {'room': rooms}
+    return render(request, 'room/index.html', context)
+
