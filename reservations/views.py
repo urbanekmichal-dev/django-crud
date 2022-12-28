@@ -1,14 +1,15 @@
 from datetime import timezone
 
+from django.contrib.auth.models import User
 from django.shortcuts import render, get_object_or_404, redirect
 
 from reservations.forms import ReservationForms
-from reservations.models import Reservations, Room
+from reservations.models import Reservations
 
 
 # Create your views here.
 def index(request):
-    reservations = Reservations.objects.order_by('-name')
+    reservations = Reservations.objects.order_by('-start_date')
     context = {'reservations': reservations}
     return render(request, 'reservations/index.html', context)
 
@@ -52,8 +53,15 @@ def update(request, id):
     else:
         return edit(request, id)
 
-def roomDetails(request,id):
-    rooms = get_object_or_404(Room, id=id)
-    context = {'room': rooms}
-    return render(request, 'room/index.html', context)
+# def roomDetails(request,id):
+#     rooms = get_object_or_404(Room, id=id)
+#     context = {'room': rooms}
+#     return render(request, 'room/indexuser.html', context)
+
+def view_my_reservations(request):
+    if User.objects.filter(username=request.user):
+        user=get_object_or_404(User,username=request.user)
+        reservations=Reservations.objects.filter(user=user)
+        context = {'reservations': reservations}
+        return render(request, 'reservations/index.html', context)
 

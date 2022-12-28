@@ -1,7 +1,6 @@
 from django.contrib import admin
 
-from reservations.models import Reservations, Room
+from reservations.models import Reservations
 
 # Register your models here.
 admin.site.register(Reservations)
-admin.site.register(Room)

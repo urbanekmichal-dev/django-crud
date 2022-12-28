@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container-md">
+    {% if books_list %}
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Author</th>
+            <th scope="col">Published</th>
+            <th scope="col">Publisher</th>
+            <th scope="col">Edit</th>
+            <th scope="col">Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for b in books_list %}
+        <tr>
+            <th scope="row">{{b.id}}</th>
+            <td>{{b.name}}</td>
+            <td>{{b.author}}</td>
+            <td>{{b.published}}</td>
+            <td>{{b.publisher}}</td>
+            <td><a href="/books/edit/{{b.id}}/">Edit</a></td>
+            <td><a href="/books/delete/{{b.id}}/">Delete</a></td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+<!--pagination-->
+        {{books_list}}
+        {%if books_list.has_previous %}
+        <a href="?page=1">&laquo First</a>
+        <a href="?page={{ books_list.previous_page_number }}">Previous</a>
+        {% endif %}
+        {% if books_list.has_next %}
+        <a href="?page={{ books_list.next_page_number }}">Next</a>
+        <a href="?page={{books_list.paginator.num_pages }}">Last &raquo</a>
+        {% endif %}
+<!-- end pagination-->
+
+    {% else %}
+    <p>No books are available.</p>
+    {% endif %}
+</div>
+
+{% endblock content %}
+
+
+
+
+
+
+
