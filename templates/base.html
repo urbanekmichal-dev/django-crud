@@ -1,4 +1,15 @@
 {% load static %}
+{% load bootstrap5 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,7 +35,9 @@
     <!-- ======= header ======= -->
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="#">Library Management System</a>
+            <img src="https://static.thenounproject.com/png/317120-200.png"  width="30" height="30" alt="Maxwell Admin">
+
+            <a class="navbar-brand" href="{% url 'home' %}">Library Management System</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -33,6 +46,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     {% if user.is_authenticated %}
+                        {% if user.is_staff %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'add_book' %}">Add book</a>
                     </li>
@@ -40,25 +54,25 @@
                         <a class="nav-link" href="{% url 'view_books' %}">View books</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'view_books_user' %}">View books (user)</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">View users</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Delete users</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" href="{% url 'view_reservations' %}">View reservations</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'view_reservations_user' %}">View reservations (user)</a>
+                       <li class="nav-item">
+                        <a class="nav-link" href="{% url 'view_all_users' %}">View users</a>
                     </li>
-                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'add_reservation' %}">Add reservation</a>
+                        {% else %}
+                      <li class="nav-item">
+                        <a class="nav-link" href="{% url 'view_books_user' %}">View books</a>
                     </li>
+
                      <li class="nav-item">
+                        <a class="nav-link" href="{% url 'view_reservations_user' %}">View reservations</a>
+                    </li>
+                        {% endif %}
+                      <li class="nav-item">
                         <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'view_user_profile' %}">Hello, {{user.username}}</a>
                     </li>
                     {% else %}
                     <li class="nav-item">

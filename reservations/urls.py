@@ -10,4 +10,6 @@ urlpatterns = [
     path('update/<int:id>/', update, name='update_reservation'),
     path('delete/<int:id>/', delete, name='delete_reservation'),
 
+
+
 ]

@@ -1,6 +1,8 @@
-from datetime import timezone
+from datetime import timezone, date, datetime
 
+import django
 from django.contrib.auth.models import User
+from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404, redirect
 
 from reservations.forms import ReservationForms
@@ -9,7 +11,9 @@ from reservations.models import Reservations
 
 # Create your views here.
 def index(request):
-    reservations = Reservations.objects.order_by('-start_date')
+    p = Paginator(Reservations.objects.all(), 8)
+    page = request.GET.get('page')
+    reservations = p.get_page(page)
     context = {'reservations': reservations}
     return render(request, 'reservations/index.html', context)
 
@@ -62,6 +66,16 @@ def view_my_reservations(request):
     if User.objects.filter(username=request.user):
         user=get_object_or_404(User,username=request.user)
         reservations=Reservations.objects.filter(user=user)
-        context = {'reservations': reservations}
+
+        for reservation in reservations:
+            start_date=django.utils.timezone.now().date()
+            end_date = reservation.end_date
+            delta = end_date-start_date
+            reservation.days_left=delta.days
+
+        p = Paginator(reservations, 8)
+        page = request.GET.get('page')
+        reservations_list = p.get_page(page)
+        context = {'reservations': reservations_list}
         return render(request, 'reservations/index.html', context)
 

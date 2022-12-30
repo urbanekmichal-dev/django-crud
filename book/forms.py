@@ -12,7 +12,7 @@ import datetime
 class BookForms(ModelForm):
     class Meta:
         model = Book
-        fields = ['name', 'author', 'publisher', 'published','image']
+        fields = ['name', 'author', 'publisher', 'published','image','description','category']
         widgets = {
             'published': widgets.DateInput(attrs={'type': 'date'}),
 

@@ -15,6 +15,8 @@ class Reservations(models.Model):
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
     start_date = models.DateField()
     end_date = models.DateField()
+    days_left = models.IntegerField()
+    is_finished=models.BooleanField(default=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
 

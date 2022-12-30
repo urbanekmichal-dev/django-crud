@@ -15,4 +15,7 @@ class Book(models.Model):
     author = models.CharField(max_length=100)
     publisher = models.CharField(max_length=100)
     published = models.DateField()
+    category = models.CharField(max_length=100)
+    is_available=models.BooleanField(default=True)
+    description=models.CharField(max_length=100)
     image = models.ImageField(upload_to='images/')

@@ -13,6 +13,7 @@ from book.forms import BookForms
 from book.models import Book
 from reservations.forms import ReservationForms
 from reservations.models import Reservations
+from reservations.utilities import calc_days_left
 
 
 # Create your views here.
@@ -26,7 +27,9 @@ def index(request):
     return render(request, 'book/index.html', context)
 
 def indexuser(request):
-    p = Paginator(Book.objects.all(), 8)
+
+    available_books=Book.objects.filter(is_available=True)
+    p = Paginator(available_books, 8)
     page = request.GET.get('page')
     books_list = p.get_page(page)
 
@@ -41,16 +44,19 @@ def add(request):
 
         if form.is_valid():
             form.save()
+            messages.success(request, "Added successful")
             return redirect('view_books')
 
         else:
             context = {'form': form}
+            messages.error(request, "Invalid information.")
             return render(request, 'book/add.html', context)
 
     else:
         news = BookForms()
         context = {'form': news}
         return render(request, 'book/add.html', context)
+
 
 
 def get(request, id):
@@ -85,11 +91,23 @@ def delete(request,id):
 
 def reserve_book(request,id):
     book =get_object_or_404(Book, id=id)
+    book.is_available=False
+    book.save()
     start_date= timezone.now()
     end_date=timezone.now() + datetime.timedelta(days=15)
     user=get_object_or_404(User, id=1)
     user = get_object_or_404(User, username=request.user)
-    reservation = Reservations.objects.get_or_create(book=book, start_date=start_date,end_date=end_date,user=user)
+    reservation = Reservations.objects.get_or_create(book=book, start_date=start_date,end_date=end_date,user=user,days_left=calc_days_left(start_date,end_date),is_finished=False)
+    return redirect("view_books")
+
+def return_book(request,id):
+    reservation = get_object_or_404(Reservations, id=id)
+    reservation.is_finished=True
+    reservation.save()
+    reservation.book.is_available=True
+    reservation.save()
+    reservation.book.save()
+
     return redirect("view_books")
 
 
