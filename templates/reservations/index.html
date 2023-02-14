@@ -307,6 +307,7 @@
                                     <th scope="col">    </th>
                                     <th scope="col">Name</th>
                                     <th scope="col">Category</th>
+                                     <th scope="col">Status</th>
                                     <th class="text-center" scope="col">Return</th>
                                 </tr>
                                 </thead>
@@ -326,13 +327,13 @@
                                     </td>
                                     <td>
                                         <div class="event-wrap">
-                                            <h3><a href="#">{{n.book.name}}</a></h3>
+                                            <h3><a href="{% url 'get_book' n.book.id %}">{{n.book.name}}</a></h3>
                                             <div class="meta">
                                                 <div class="organizers">
-                                                    <a href="#">Aslan Lingker</a>
+                                                    <a >{{n.book.author}}</a>
                                                 </div>
                                                 <div class="categories">
-                                                    <a href="#">Inspire</a>
+                                                    <a >{{n.book.publisher}}</a>
                                                 </div>
                                                 <div class="time">
                                                     <span>{{n.start_date}} - {{n.end_date}}</span>
@@ -345,6 +346,12 @@
                                             <span>{{n.book.category}}</span>
                                         </div>
                                     </td>
+                                     <td>
+                                                    <div class="r-no">
+                                                        <span>{{n.state}}</span>
+
+                                                    </div>
+                                                </td>
                                     <td>
                                         <div class="primary-btn">
                                             {% if n.is_finished %}

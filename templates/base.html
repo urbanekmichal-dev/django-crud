@@ -44,63 +44,76 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
+                <ul class="navbar-nav flex-grow-1">
                     {% if user.is_authenticated %}
                         {% if user.is_staff %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'add_book' %}">Add book</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'view_books' %}">View books</a>
+                        <a class="nav-link" href="{% url 'view_books' %}">Books</a>
+                    </li>
+                       </li>
+                       <li class="nav-item">
+                        <a class="nav-link" href="{% url 'view_all_users' %}">Users</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'view_reservations' %}">View reservations</a>
-                    </li>
-                       <li class="nav-item">
-                        <a class="nav-link" href="{% url 'view_all_users' %}">View users</a>
-                    </li>
+                        <a class="nav-link" href="{% url 'view_reservations' %}">Reservations</a>
+
                         {% else %}
                       <li class="nav-item">
-                        <a class="nav-link" href="{% url 'view_books_user' %}">View books</a>
+                        <a class="nav-link" href="{% url 'view_books_user' %}">Books</a>
                     </li>
 
                      <li class="nav-item">
-                        <a class="nav-link" href="{% url 'view_reservations_user' %}">View reservations</a>
+                        <a class="nav-link" href="{% url 'view_reservations_user' %}">Your reservations</a>
                     </li>
+
                         {% endif %}
-                      <li class="nav-item">
-                        <a class="nav-link" href="{% url 'logout' %}">Logout</a>
-                    </li>
+                    </ul>
+
+                 <ul class="navbar-nav flex-grow-1">
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'view_user_profile' %}">Hello, {{user.username}}</a>
                     </li>
+                       </ul>
+                   <ul class="navbar-nav flex-grow-1">
+                      <li class="nav-item">
+                        <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                        </li>
+                     </ul>
                     {% else %}
+                 <ul class="navbar-nav flex-grow-1">
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'login' %}">Login</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'register' %}">Register</a>
                     </li>
+                     </ul>
                     {% endif %}
-                </ul>
+
             </div>
         </nav>
     </header>
 
     <!-- ============================================== Content Page Here ============================================== -->
     <!-- Block content from other pages denied here -->
+
+    <div class="container">
     {% block content %} {% endblock content %}
+    </div>
     <!-- ============================================= END // Content Page ============================================= -->
 
 </div> <!-- End // Wrapper -->
 
 <!--&lt;!&ndash; ======= Footer ======= &ndash;&gt;-->
-<!--<footer class="bg-dark text-center text-lg-start" id="footer" style="color: #fff;">-->
-<!--    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">-->
-<!--        © 2022 Library Management System-->
 
-<!--    </div>-->
-<!--</footer>-->
+    <div class="text-left p-3">
+        © 2022 Library Management System
+
+    </div>
+
 
 <!-- ======= JAVASCRIPT SECTION ======= -->
 <!-- Bootstrap JS -->

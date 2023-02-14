@@ -22,6 +22,7 @@ body {
     height: 90px;
     -webkit-border-radius: 100px;
     -moz-border-radius: 100px;
+    object-fit: cover;
     border-radius: 100px;
 }
 .account-settings .user-profile h5.user-name {
@@ -72,9 +73,9 @@ body {
 		<div class="account-settings">
 			<div class="user-profile">
 				<div class="user-avatar">
-					<img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Maxwell Admin">
+					<img src={{custom_user.image.url}} alt="Maxwell Admin">
 				</div>
-				<h5 class="user-name">{{custom_user.first_name}} {{custom_user.last_name}} </h5>
+				<h5 class="user-name">{{custom_user.first_name}} {{custom_user.last_name}}</h5>
 				<h6 class="user-email">{{custom_user.user.email}}</h6>
 			</div>
 <!--			<div class="about">-->
@@ -128,13 +129,13 @@ body {
 			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
 				<div class="form-group">
 					<label for="Street">Street</label>
-					<input type="name" class="form-control" id="Street" placeholder="Enter Street" name="street" value="{{custom_user.street}}">
+					<input type="text" class="form-control" id="street" placeholder="Enter Street" name="street" value="{{custom_user.street}}">
 				</div>
 			</div>
 			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
 				<div class="form-group">
 					<label for="ciTy">City</label>
-					<input type="name" class="form-control" id="ciTy" placeholder="Enter City" name="city" value="{{custom_user.city}}">
+					<input type="text" class="form-control" id="ciTy" placeholder="Enter City" name="city" value="{{custom_user.city}}">
 				</div>
 			</div>
 			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
@@ -163,7 +164,7 @@ body {
 		<div class="row gutters">
 			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 				<div class="text-right">
-					<button type="button" id="submit" name="submit" class="btn btn-secondary">Cancel</button>
+					<button type="button"  onclick="location.href='{% url 'home'  %}'" id="submit" name="submit" class="btn btn-secondary">Cancel</button>
 					<button type="submit" id="submit" name="submit" class="btn btn-primary ">Update</button>
 				</div>
 			</div>

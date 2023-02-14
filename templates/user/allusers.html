@@ -199,30 +199,43 @@
               <tr class="candidates-list">
                 <td class="title">
                   <div class="thumb">
-                    <img class="img-fluid" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="">
+                    <img class="img-fluid" src={{u.image.url}} alt="">
                   </div>
                   <div class="candidate-list-details">
                     <div class="candidate-list-info">
                       <div class="candidate-list-title">
-                        <h5 class="mb-0"><a href="#">{{u.first_name}} {{u.last_name}}</a></h5>
+                        <h5 class="mb-0"><a >{{u.first_name}} {{u.last_name}}</a></h5>
                       </div>
                       <div class="candidate-list-option">
                         <ul class="list-unstyled">
-                          <li><i class="fas fa-filter pr-1"></i>Information Technology</li>
-                          <li><i class="fas fa-map-marker-alt pr-1"></i>Rolling Meadows, IL 60008</li>
+                          <li><i class="fas fa-filter pr-1"></i>{{u.user.email}}</li>
+                          <li><i class="fas fa-map-marker-alt pr-1"></i> {{u.city}}, {{u.state}} {{u.zip_code}}</li>
                         </ul>
                       </div>
                     </div>
                   </div>
                 </td>
                 <td class="candidate-list-favourite-time text-center">
-                  <a class="candidate-list-favourite order-2 text-danger" href="#"><i class="fas fa-heart"></i></a>
-                  <span class="candidate-list-time order-1">Shortlisted</span>
+                  {% if u.user.is_active %}
+
+                   <a class="candidate-list-favourite order-2 text-danger" ><i class="fas fa-heart"></i></a>
+                  <span class="candidate-list-time order-1">Active</span>
+                  {%else%}
+
+
+                  <span class="candidate-list-time order-1">Deactivated</span>
+                  {% endif %}
                 </td>
                 <td>
                   <ul class="list-unstyled mb-0 d-flex justify-content-end">
-                    <li><a href="#" class="text-primary" data-toggle="tooltip" title="" data-original-title="view"><i class="far fa-eye"></i></a></li>
-                    <li><a href="/users/user/{{u.id}}/" class="text-info" data-toggle="tooltip" title="" data-original-title="Edit"><i class="fas fa-pencil-alt"></i></a></li>
+                    <li><a  onclick="location.href='{% url 'user_details_admin' u.id %}'" class="text-primary" data-toggle="tooltip" title="" data-original-title="view"><i class="far fa-eye"></i></a></li>
+                     {%if u.user.is_active %}
+
+                    <li><a onclick="location.href='{% url 'change_user_state' u.id %}'" class="text-danger" data-toggle="tooltip" title="" data-original-title="Delete"><i class="fas fa-heart"></i></a></li>
+
+                    {%else%}
+                    <li><a onclick="location.href='{% url 'change_user_state' u.id %}'" class="text-danger" data-toggle="tooltip" title="" data-original-title="Delete"><i class="far fa-heart"></i></a></li>
+                    {%endif%}
                     <li><a href="#" class="text-danger" data-toggle="tooltip" title="" data-original-title="Delete"><i class="far fa-trash-alt"></i></a></li>
                   </ul>
                 </td>

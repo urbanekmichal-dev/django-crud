@@ -1,14 +1,12 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<!--{{ book.name }}-->
-<!--{{ book.author }}-->
-<!--{{ book.publisher }}-->
-<!--{{ book.published }}-->
-<!--{{ book.image }}-->
-
-
-
+<style>
+    .card img {
+        max-width: 100%;
+        object-fit: cover;
+    }
+</style>
 
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
@@ -21,21 +19,11 @@
                     <div class="white-box text-center"><img src={{book.image.url}} class="img-responsive"></div>
                 </div>
                 <div class="col-lg-7 col-md-7 col-sm-6">
-                    <h4 class="box-title mt-5">Product description</h4>
-                    <p>Lorem Ipsum available,but the majority have suffered alteration in some form,by injected humour,or randomised words which don't look even slightly believable.but the majority have suffered alteration in some form,by injected humour</p>
-                    <h2 class="mt-5">
-                        $153<small class="text-success">(36%off)</small>
-                    </h2>
-                    <button class="btn btn-dark btn-rounded mr-1" data-toggle="tooltip" title="" data-original-title="Add to cart">
-                        <i class="fa fa-shopping-cart"></i>
-                    </button>
-                    <button class="btn btn-primary btn-rounded">Buy Now</button>
-                    <h3 class="box-title mt-5">Key Highlights</h3>
-                    <ul class="list-unstyled">
-                        <li><i class="fa fa-check text-success"></i>Sturdy structure</li>
-                        <li><i class="fa fa-check text-success"></i>Designed to foster easy portability</li>
-                        <li><i class="fa fa-check text-success"></i>Perfect furniture to flaunt your wonderful collectibles</li>
-                    </ul>
+                    <h4 class="box-title mt-5">Book description</h4>
+                    <p> {{book.description}}</p>
+                    {% if not user.is_staff %}
+                    <button onclick="location.href='{% url 'reserve_book' book.id %}'" class="btn btn-primary btn-rounded">Reserve</button>
+                    {% endif %}
                     <div class="table-responsive">
                          <h3 class="box-title mt-5">General Info</h3>
                         <table class="table table-striped table-product">
@@ -51,6 +39,10 @@
                              <tr>
                                     <td width="300">Published</td>
                                     <td>{{book.published}}</td>
+                                </tr>
+                                  <tr>
+                                    <td width="300">Category</td>
+                                    <td>{{book.category}}</td>
                                 </tr>
                             </tbody>
                         </table>

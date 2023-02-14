@@ -2,20 +2,28 @@
 {% block content %}
 
 
+<style>
+    .card img {
+       height: 20rem;
+       object-fit: cover;
+}
+</style>
+
+
+<h1>Books</h1>
 <div class="container-md">
     {% if books_list %}
     <div class="container">
         <div class="row justify-content-center">
             {% for b in books_list %}
             <div class="col-md-3">
-                <div class="card" style="width: 15rem;">
+                <div class="card" style="hight: 18rem;">
                     <img class="card-img-top"
                          src="{{b.image.url}}"
                          alt="Card image cap">
                     <div class="card-body">
-                        <h5 class="card-title">{{b.name}}</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                            the card's content.</p>
+                        <h5 class="card-title">  <a href="{% url 'get_book' b.id %}" class="card-link">{{b.name}}</a></h5>
+                        <p class="card-text">{{b.description|truncatechars:100}}</p>
                     </div>
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item">Author: {{b.author}}</li>
@@ -23,8 +31,7 @@
                         <li class="list-group-item">Publisher: {{b.publisher}}</li>
                     </ul>
                     <div class="card-body">
-                        <a href="{% url 'reserve_book' b.id %}" class="card-link">Reserve</a>
-
+                        <button  onclick="location.href='{% url 'reserve_book' b.id %}'" id="submit" name="submit" class="btn btn-primary ">Reserve</button>
                     </div>
                 </div>
             </div>

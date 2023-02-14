@@ -58,7 +58,7 @@ def register_request(request):
 
         except User.DoesNotExist:
                 user=User.objects.create_user(username=request.POST['username'],password=request.POST['password1'],email=request.POST['email'])
-                customUser=CustomUser.objects.create(user=user,first_name="",last_name="",phone="",street="",city="",state="",zip_code="")
+                customUser=CustomUser.objects.create(user=user,first_name="",last_name="",phone="",street="",city="",state="",zip_code="",image="\images\defaultImage.png")
                 # user = form.save()
                 login(request, user)
                 messages.success(request, "Registration successful")
@@ -67,14 +67,3 @@ def register_request(request):
     form = NewUserForm()
     return render (request=request, template_name="authentication/register.html", context={"register_form":form})
 
-# def register_request(request):
-#     if request.method == "POST":
-#         form = NewUserForm(request.POST)
-#         if form.is_valid():
-#             user = form.save()
-#             login(request, user)
-#             messages.success(request, "Registration successful." )
-#             return redirect("home")
-#         messages.error(request, "Unsuccessful registration. Invalid information.")
-#     form = NewUserForm()
-#     return render (request=request, template_name="authentication/register.html", context={"register_form":form})
