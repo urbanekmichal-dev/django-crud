@@ -1,44 +1,44 @@
 {% extends 'base.html' %}
+
 {% block content %}
 
-
-
-
 <!--<div class="container-md">-->
-<!--    {% if reservations %}-->
+<!--    {% if books_list %}-->
 <!--    <table class="table">-->
 <!--        <thead class="thead-dark">-->
 <!--        <tr>-->
 <!--            <th scope="col">ID</th>-->
-<!--            <th scope="col">Book</th>-->
-<!--            <th scope="col">Start date</th>-->
-<!--            <th scope="col">End date</th>-->
-<!--            <th scope="col">User</th>-->
-<!--            <th scope="col">DELETE</th>-->
+<!--            <th scope="col">Name</th>-->
+<!--            <th scope="col">Author</th>-->
+<!--            <th scope="col">Published</th>-->
+<!--            <th scope="col">Publisher</th>-->
+<!--            <th scope="col">Edit</th>-->
+<!--            <th scope="col">Delete</th>-->
 <!--        </tr>-->
 <!--        </thead>-->
 <!--        <tbody>-->
-<!--        {% for n in reservations %}-->
+<!--        {% for b in books_list %}-->
 <!--        <tr>-->
-<!--            <th scope="row">{{n.id}}</th>-->
-<!--            <td><a href=/books/{{n.id}}/>{{n.book.name}}</a></td>-->
-<!--            <td>{{n.start_date}}</td>-->
-<!--            <td>{{n.end_date}}</td>-->
-<!--            <td>{{n.user}}</td>-->
-<!--            <td><a href=/reservations/delete/{{n.id}}/>DELETE</a></td>-->
+<!--            <th scope="row">{{b.id}}</th>-->
+<!--            <td>{{b.name}}</td>-->
+<!--            <td>{{b.author}}</td>-->
+<!--            <td>{{b.published}}</td>-->
+<!--            <td>{{b.publisher}}</td>-->
+<!--            <td><a href="/books/edit/{{b.id}}/">Edit</a></td>-->
+<!--            <td><a href="/books/delete/{{b.id}}/">Delete</a></td>-->
 <!--        </tr>-->
 <!--        {% endfor %}-->
 <!--        </tbody>-->
 <!--    </table>-->
 
+
+
 <!--    {% else %}-->
-<!--    <p>No reservations are available.</p>-->
+<!--    <p>No books are available.</p>-->
 <!--    {% endif %}-->
 <!--</div>-->
 
-<!--<div class="d-flex justify-content-center">-->
-<!--    <a href="/reservations/add/">Add reservation</a>-->
-<!--</div>-->
+<!--NEW!!!!!!!!!!!!!!-->
 
 <style>
     body
@@ -287,7 +287,7 @@
             <div class="col-lg-12">
                 <div class="section-title text-center">
                     <div class="title-text">
-                        <h2>Your reservations</h2>
+                        <h2>All books</h2>
                     </div>
                 </div>
             </div>
@@ -299,66 +299,58 @@
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade active show" id="home" role="tabpanel">
                         <div class="table-responsive">
-                            {% if reservations %}
+                            {% if books_list  %}
                             <table class="table">
                                 <thead>
                                 <tr>
-                                    <th class="text-center" scope="col">Days left</th>
-                                    <th scope="col">    </th>
+                                    <th class="text-center" scope="col"></th>
                                     <th scope="col">Name</th>
+                                    <th scope="col">Author</th>
+                                    <th scope="col">Description</th>
                                     <th scope="col">Category</th>
-                                     <th scope="col">Status</th>
-                                    <th class="text-center" scope="col">Return</th>
+                                    <th class="text-center" scope="col">Operations</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {% for n in reservations %}
+                                {% for n in books_list  %}
                                 <tr class="inner-box">
-                                    <th scope="row">
-                                        <div class="event-date">
-                                            <span>{{n.days_left}}</span>
-                                            <p>Days</p>
-                                        </div>
-                                    </th>
-                                    <td>
+                                    <td scope="row">
                                         <div class="event-img">
-                                            <img src="{{n.book.image.url}}" alt=""/>
+                                            <img src="{{n.image.url}}" alt=""/>
                                         </div>
                                     </td>
-                                    <td>
-                                        <div class="event-wrap">
-                                            <h3><a href="{% url 'get_book' n.book.id %}">{{n.book.name}}</a></h3>
-                                            <div class="meta">
-                                                <div class="organizers">
-                                                    <a >{{n.book.author}}</a>
-                                                </div>
-                                                <div class="categories">
-                                                    <a >{{n.book.publisher}}</a>
-                                                </div>
-                                                <div class="time">
-                                                    <span>{{n.start_date}} - {{n.end_date}}</span>
-                                                </div>
-                                            </div>
+                                     <td>
+                                        <div class="r-no">
+                                            <span><a href="{% url 'get_book' n.id %}">{{n.name}}</a></span>
+                                        </div>
+                                    </td>
+                                  <td>
+                                        <div class="r-no">
+                                            <span>{{n.author}}</span>
                                         </div>
                                     </td>
                                     <td>
                                         <div class="r-no">
-                                            <span>{{n.book.category}}</span>
+                                            <span>{{n.description|truncatechars:200}}</span>
                                         </div>
                                     </td>
                                      <td>
-                                                    <div class="r-no">
-                                                        <span>{{n.state}}</span>
-
-                                                    </div>
-                                                </td>
+                                        <div class="r-no">
+                                            <span>{{n.category}}</span>
+                                        </div>
+                                    </td>
                                     <td>
                                         <div class="primary-btn">
-                                            {% if n.is_finished %}
-                                            <button type="submit" disabled id="submit" name="submit" class="btn btn-primary ">Return</button>
-                                             {% else %}
-                                            <button type="submit" onclick="location.href='{% url 'return_book' n.id %}'"  id="submit" name="submit" class="btn btn-primary ">Return</button>
-                                             {% endif %}
+
+                                            <button type="submit" onclick="location.href='{% url 'edit_book' n.id %}'"   name="submit" class="btn btn-primary ">Edit</button>
+
+                                            <button type="submit" onclick="location.href='{% url 'delete_book' n.id %}'"   name="submit" class="btn btn-secondary ">Delete</button>
+
+                                            {% if n.is_available %}
+                                                        <button type="submit" onclick="location.href='{% url 'change_visibility' n.id %}'"  name="submit" class="btn btn-danger ">Deactivate</button>
+                                               {%else%}
+                                                     <button type="submit" onclick="location.href='{% url 'change_visibility' n.id %}'" name="submit" class="btn btn-success ">Activate</button>
+                                               {%endif%}
                                         </div>
                                     </td>
                                 </tr>
@@ -373,24 +365,35 @@
         </div>
     </div>
 </div>
-<div class="primary-btn text-center">
-                  <!--pagination-->
-        {{reservations}}
-        {%if reservations.has_previous %}
-        <a href="?page=1">&laquo First</a>
-        <a href="?page={{ reservations.previous_page_number }}">Previous</a>
-        {% endif %}
-        {% if reservations.has_next %}
-        <a href="?page={{ reservations.next_page_number }}">Next</a>
-        <a href="?page={{reservations.paginator.num_pages }}">Last &raquo</a>
-        {% endif %}
-<!-- end pagination-->
-</div>
 </div>
 <!-- /col end-->
 </div>
 <!-- /row end-->
+<div class="primary-btn text-center">
+    <!--pagination-->
+        {{books_list}}
+        {%if books_list.has_previous %}
+        <a href="?page=1">&laquo First</a>
+        <a href="?page={{ books_list.previous_page_number }}">Previous</a>
+        {% endif %}
+        {% if books_list.has_next %}
+        <a href="?page={{ books_list.next_page_number }}">Next</a>
+        <a href="?page={{books_list.paginator.num_pages }}">Last &raquo</a>
+        {% endif %}
+<!-- end pagination-->
+</div>
 </div>
 </div>
 
+
+
+
+
 {% endblock content %}
+
+
+
+
+
+
+
